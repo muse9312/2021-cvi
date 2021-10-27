@@ -8,6 +8,7 @@ import {
   ALERT_MESSAGE,
   RESPONSE_STATE,
   SNACKBAR_MESSAGE,
+  SERVER_MESSAGE,
   NICKNAME_LIMIT,
   REGEX,
   LOCAL_STORAGE_KEY,
@@ -24,7 +25,7 @@ import {
   LoginContainer,
   Span,
 } from './SignupPage.styles';
-import { useMovePage, useSnackBar } from '../../hooks';
+import { useMovePage, useSnackbar } from '../../hooks';
 import { fetchPostSignup } from '../../service/fetch';
 import customRequest from '../../service/customRequest';
 
@@ -35,7 +36,7 @@ const SignupPage = () => {
   const [selectedAgeRange, setSelectedAgeRange] = useState('10대');
   const [nickname, setNickname] = useState();
 
-  const { openSnackBar } = useSnackBar();
+  const { openSnackbar } = useSnackbar();
   const { goHomePage, goLoginPage } = useMovePage();
 
   const isValidNickname = (nickname) =>
@@ -57,6 +58,12 @@ const SignupPage = () => {
     const response = await customRequest(() => fetchPostSignup(data));
 
     if (response.state === RESPONSE_STATE.FAILURE) {
+      if (response.data.includes(SERVER_MESSAGE.DUPLICATED_NICJNAME)) {
+        alert(ALERT_MESSAGE.FAIL_TO_SIGN_DUPLICATED_NICKNAME);
+
+        return;
+      }
+
       alert(ALERT_MESSAGE.FAIL_TO_SIGNUP);
 
       return;
@@ -65,7 +72,7 @@ const SignupPage = () => {
     localStorage.setItem(LOCAL_STORAGE_KEY.ACCESS_TOKEN, JSON.stringify(response.data.accessToken));
     dispatch(getMyInfoAsync(response.data.accessToken));
 
-    openSnackBar(SNACKBAR_MESSAGE.SUCCESS_TO_SIGNUP);
+    openSnackbar(SNACKBAR_MESSAGE.SUCCESS_TO_SIGNUP);
     goHomePage();
   };
 
