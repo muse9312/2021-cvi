@@ -78,15 +78,23 @@ subprojects {
                                         '**/CentralVaccinationInformationApplication*',
                                         '**/DummyData*',
                                         '**/CVIControllerAdvice*',
+<<<<<<< HEAD
                                         // cvi-publicdata-parser
+=======
+                                        // domain-cvi-publicdata-parser
+>>>>>>> 4b9c5e023df072aa0b7159f4b6a4f865280652ac
                                         '**/Parser*',
                                         // domain-cvi
                                         '**/Sort*',
                                         '**/Filter*',
                                         '**/ImageType*',
+                                        '**/JpaConfiguration*',
                                         // domain-cvi-oauth-service
                                         '**/KakaoProfile*',
-                                        '**/NaverProfile*'
+                                        '**/NaverProfile*',
+                                        '**/UserInformation*',
+                                        '**/AuthRequest*',
+                                        '**/OAuthConfig*'
                                 ] + Qdomains)}))
         }
         finalizedBy 'jacocoTestCoverageVerification'
@@ -103,17 +111,21 @@ subprojects {
                     "**/*Test*.*, **/Q*.java, **/*Doc*.java, " +
                             // api-cvi-api
                             "**/CentralVaccinationInformationApplication.java, **/DataLoader.java, **/DummyData.java, **/CVIControllerAdvice.java, " +
+<<<<<<< HEAD
                             // cvi-publicdata-parser
+=======
+                            // domain-cvi-publicdata-parser
+>>>>>>> 4b9c5e023df072aa0b7159f4b6a4f865280652ac
                             "**/Parser.java, " +
                             // domain-cvi
-                            "**/Sort.java, **/Filter.java, **/ImageType.java, " +
+                            "**/Sort.java, **/Filter.java, **/ImageType.java, **/JpaConfiguration.java, " +
                             // domain-cvi-oauth-service
-                            "**/KakaoProfile.java, **/NaverProfile.java"
+                            "**/KakaoProfile.java, **/NaverProfile.java, **/UserInformation.java, **/AuthRequest.java, **/OAuthConfig.java"
         }
     }
 }
 
-def skipSonarProjects = [project(':app-cvi-admin'), project(':common-cvi'), project(':domain-cvi-aws-s3-service'), project(':domain-cvi-scheduler')]
+def skipSonarProjects = [project(':common-cvi'), project(':domain-cvi-aws-s3-service'), project(':domain-cvi-scheduler')]
 configure(skipSonarProjects) {
     sonarqube {
         skipProject = true
